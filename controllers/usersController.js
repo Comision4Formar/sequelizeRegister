@@ -32,7 +32,36 @@ module.exports = {
     processLogin : (req,res) => {
         let errores = validationResult(req);
         if(errores.isEmpty()){
-            res.send(req.body)
+            const {email, pass, recordar} = req.body;
+
+            db.Usuarios.findOne({
+                where : {
+                    email
+                }
+            })
+            .then(user => {
+                if(user && bcrypt.compareSync(pass, user.pass)){
+                    req.session.userLogin = {
+                        id : user.id,
+                        name : user.name,
+                        avatar : user.avatar
+                    }
+                    if(recordar){
+                        res.cookie('userComision4',req.session.userLogin, {
+                            maxAge : 1000 * 60
+                        })
+                    }
+                    return res.redirect('/')
+                }else {
+                    return res.render('login',{
+                        errores :{
+                            invalid : {
+                                msg : "Credenciales inválidas"
+                            }
+                        }
+                    })
+                }
+            })
         }else{
             return res.render('login',{
                 errores : errores.mapped(),
@@ -41,7 +70,11 @@ module.exports = {
         }
     },
     logout : (req,res) => {
-
+        req.session.destroy();
+        if(req.cookies.userComision4){
+            res.cookie('userComision4','', {maxAge : -1})
+        }
+        return res.redirect('/')
     },
     profile : (req,res) => {
         res.render('profile')
