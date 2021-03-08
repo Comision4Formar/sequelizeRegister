@@ -13,7 +13,8 @@ module.exports = {
         })
         .then(peliculas => {
             res.render('list',{
-                peliculas
+                peliculas,
+                script : "movies.js"
             })
         })
     },

@@ -6,7 +6,8 @@ module.exports = {
         })
         .then(peliculas => {
             res.render('index',{
-                peliculas
+                peliculas,
+                script : "index.js"
             })
         })
         .catch(error => res.send(error))
