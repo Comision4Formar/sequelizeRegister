@@ -16,5 +16,16 @@ module.exports = {
                 peliculas
             })
         })
+    },
+    remove : (req,res) => {
+        db.Movie.destroy({
+            where : {
+                id : req.params.id
+            }
+        })
+        .then(()=>{
+            res.redirect('/movies/list')
+        })
+        .catch(error => res.send(error))
     }
 }
