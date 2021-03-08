@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <%- include('partials/head')  %> 
+  <body>
+    <%- include('partials/header')  %> 
+
+    <div class="container">
+      
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Titulo</th>
+                <th scope="col">Rating</th>
+                <th scope="col">Premios</th>
+                <th scope="col">Duración</th>
+                <th scope="col">Genero</th>
+                <th scope="col">Operaciones</th>
+              </tr>
+            </thead>
+            <tbody>
+                <% peliculas.forEach(pelicula => { %>
+                    <tr>
+                        <td><%= pelicula.title %> </td>
+                        <td><%= pelicula.rating %> </td>
+                        <td><%= pelicula.awards %> </td>
+                        <td><%= pelicula.length %> </td>
+                        <td><%= pelicula.genre.name %> </td>
+                        <td>
+                            <button class="btn btn-sm btn-success">Editar</button>
+                            <button class="btn btn-sm btn-danger">Eliminar</button>
+                        </td>
+
+
+                      </tr>
+                <% }) %>
+             
+              
+            </tbody>
+          </table>
+    </div>
+ 

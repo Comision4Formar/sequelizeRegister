@@ -12,10 +12,11 @@ module.exports = {
 
         if(errores.isEmpty()){
             const {nombre, email, pass} = req.body;
-            db.Usuarios.create({
+            db.User.create({
                 name : nombre.trim(),
                 email,
-                pass : bcrypt.hashSync(pass,12)
+                pass : bcrypt.hashSync(pass,12),
+                rol : "user"
             })
             .then(()=>res.redirect('/users/login'))
             .catch(error => res.send(error))
@@ -34,7 +35,7 @@ module.exports = {
         if(errores.isEmpty()){
             const {email, pass, recordar} = req.body;
 
-            db.Usuarios.findOne({
+            db.User.findOne({
                 where : {
                     email
                 }
@@ -44,6 +45,7 @@ module.exports = {
                     req.session.userLogin = {
                         id : user.id,
                         name : user.name,
+                        rol : user.rol,
                         avatar : user.avatar
                     }
                     if(recordar){

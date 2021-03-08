@@ -11,7 +11,7 @@ module.exports = [
     .withMessage('Debes escribir un email válido'),
 
     body('email').custom(value => {
-        return db.Usuarios.findOne({
+        return db.User.findOne({
             where : {
                 email : value
             }
